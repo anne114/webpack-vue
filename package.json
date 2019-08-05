@@ -4,8 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prepush": "lint",
-    "lint": "eslint && stylelint",
     "dev": "webpack-dev-server",
     "build-dev": "cross-env NODE_ENV=development webpack --display-chunks --progress --colors --profile --bail",
     "build-test": "cross-env NODE_ENV=test webpack --display-chunks --progress --colors --profile --bail",
