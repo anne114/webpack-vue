@@ -1,22 +1,24 @@
 const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
-const { getEntrys, getHtmlWebpackPlugin } = require("./utils");
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const {
+  getEntrys,
+  getHtmlWebpackPlugin
+} = require("./utils");
 module.exports = {
   entry: getEntrys(),
   output: {
-    path: path.resolve(__dirname, "../dist"),
-    filename: "js/[name].[chunkhash:8].js",
-    chunkFilename: "js/[name].[chunkhash:8].js"
+    path: path.resolve(__dirname, "../dist")
   },
   resolve: {
     extensions: [".js", ".vue", ".scss"],
     alias: {
-      "@": path.resolve(__dirname, "../src")
+      "@": path.resolve(__dirname, "../src"),
+      "utilsJs": '@/common/js/utils.js'
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: "vue-loader"
       },
@@ -27,33 +29,60 @@ module.exports = {
       },
       {
         test: /\.(png|jpg|jif)$/i,
-        use: [
-          {
+        use: [{
             loader: "url-loader",
             options: {
               limit: 10240,
               name: "images/[name].[hash:8].[ext]"
+            }
+          },
+          {
+            loader: 'image-webpack-loader', // 压缩图片
+            options: {
+              bypassOnDebug: true,
             }
           }
         ]
       },
       {
         test: /\.(css|scss)$/,
-        use: ["css-loader", "postcss-loader", "sass-loader"]
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"]
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 10240,
-              name: "fonts/[name].[hash:8].[ext]"
-            }
+        use: [{
+          loader: "url-loader",
+          options: {
+            limit: 10240,
+            name: "fonts/[name].[hash:8].[ext]"
           }
-        ]
+        }]
+      },
+      {
+        test: /\.(js|vue)$/,
+        use: {
+          loader: 'eslint-loader'
+        }
       }
     ]
   },
-  plugins: [...getHtmlWebpackPlugin(), new VueLoaderPlugin()]
+  plugins: [...getHtmlWebpackPlugin(),
+    new VueLoaderPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[chunkhash:8].css'
+    })
+  ],
+  optimization: {
+    splitChunks: {
+      cacheGroups: {
+        //打包公共模块
+        commons: {
+          chunks: 'initial', //initial表示提取入口文件的公共部分
+          minChunks: 2, //表示提取公共部分最少的文件数
+          minSize: 0, //表示提取公共部分最小的大小
+          name: 'commons' //提取出来的文件命名
+        }
+      }
+    }
+  }
 };

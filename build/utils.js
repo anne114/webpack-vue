@@ -19,6 +19,7 @@ function getFileName(dirPath) {
   console.log("fileNames::", fileNames);
   return fileNames;
 }
+
 function getHtmlTempContent(title) {
   return `
   <!DOCTYPE html>
@@ -52,7 +53,7 @@ exports.getHtmlWebpackPlugin = () => {
         removeComments: true,
         removeTagWhitespace: true
       },
-      chunks: [v],
+      chunks: [v, 'commons'],
       filename: `./html/${v}.html`
     });
     htmlArr.push(item);
