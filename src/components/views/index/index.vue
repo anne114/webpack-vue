@@ -19,7 +19,7 @@ export default {
   },
   mounted () {
     toast();
-    // console.log(a)
+    console.log(a)
   }
 };
 </script>

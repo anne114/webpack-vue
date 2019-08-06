@@ -4,10 +4,23 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "precommit": "lint-staged",
     "dev": "webpack-dev-server",
     "build-dev": "cross-env NODE_ENV=development webpack --display-chunks --progress --colors --profile --bail",
     "build-test": "cross-env NODE_ENV=test webpack --display-chunks --progress --colors --profile --bail",
     "build-pro": "cross-env NODE_ENV=production webpack --display-chunks --progress --colors --profile --bail"
+  },
+  "lint-staged": {
+    "linters": {
+      "./src/**": [
+        "./node_modules/.bin/eslint",
+        "git add"
+      ]
+    },
+    "ignore": [
+      "./src/static/**",
+      "./src/html/*"
+    ]
   },
   "author": "anne",
   "license": "ISC",
