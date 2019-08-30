@@ -1,25 +1,23 @@
 <template>
   <div class="content">
     <h3>{{ msg }}</h3>
-    <img src="../../../static/images/test.jpg">
-    <img src="../../../static/images/1.png">
-    <ListVue />
+    <!-- <img src="../../../static/images/test.jpg">
+    <img src="../../../static/images/1.png"> -->
+    <router-view></router-view>
   </div>
 </template>
 <script>
-// import { toast } from '@/common/js/utils.js';
-import { toast } from 'utilsJs'
-import ListVue from './list.vue';
+import { toast } from 'utilsJs';
+import config from 'config';
 export default {
-  components: { ListVue },
-  data () {
+  data() {
     return {
       msg: 'welcome to webpack-vue'
     };
   },
-  mounted () {
+  mounted() {
     toast();
-    console.log(a)
+    console.log('::config', config);
   }
 };
 </script>

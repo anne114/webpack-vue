@@ -47,7 +47,7 @@ exports.getHtmlWebpackPlugin = () => {
   let htmlArr = [];
   entryFilesName.forEach(v => {
     let item = new htmlWebpackPlugin({
-      templateContent: getHtmlTempContent("webpack"),
+      templateContent: getHtmlTempContent(v),
       minify: {
         removeAttributeQuotes: true,
         removeComments: true,
