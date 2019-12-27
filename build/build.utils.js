@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const htmlWebpackPlugin = require("html-webpack-plugin");
-const entryFilePath = path.resolve(__dirname, "../src/entry");
+const entryFilePath = path.resolve(__dirname, "../src/pages");
 const entryFilesName = getFileName(entryFilePath);
 
 function getFileName(dirPath) {
@@ -12,51 +12,33 @@ function getFileName(dirPath) {
   for (let i = 0; i < length; i++) {
     let fileItem = files[i];
     let state = fs.statSync(`${dirPath}/${fileItem}`);
-    if (state.isFile()) {
-      fileNames.push(path.basename(fileItem, path.extname(fileItem)));
+    if (!state.isFile()) {
+      fileNames.push(fileItem);
     }
   }
-  console.log("fileNames::", fileNames);
   return fileNames;
-}
-
-function getHtmlTempContent(title) {
-  return `
-  <!DOCTYPE html>
-  <html lang="en">
-    <head>
-      <meta charset="UTF-8" />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-      <title>${title}</title>
-    </head>
-    <body>
-      <div id="app"></div>
-    </body>
-  </html>  
-  `;
 }
 exports.getEntrys = () => {
   let entrys = {};
   entryFilesName.forEach(v => {
-    entrys[v] = path.resolve(entryFilePath, v + ".js");
+    entrys[v] = path.resolve(entryFilePath, v + "/entry.js");
   });
   return entrys;
 };
 exports.getHtmlWebpackPlugin = () => {
-  let htmlArr = [];
+  let htmlArray = [];
   entryFilesName.forEach(v => {
     let item = new htmlWebpackPlugin({
-      templateContent: getHtmlTempContent(v),
+      template: path.resolve(__dirname, "../src/template.html"),
       minify: {
         removeAttributeQuotes: true,
         removeComments: true,
         removeTagWhitespace: true
       },
-      chunks: [v, 'commons'],
+      chunks: [v, "commons"],
       filename: `./html/${v}.html`
     });
-    htmlArr.push(item);
+    htmlArray.push(item);
   });
-  return htmlArr;
+  return htmlArray;
 };

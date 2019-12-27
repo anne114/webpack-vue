@@ -1,8 +1,10 @@
-const env = process.env.NODE_ENV;
-if (env === 'production') {
-  module.exports = require('./build/pro');
-} else if (env === 'test') {
-  module.exports = require('./build/test');
-} else {
-  module.exports = require('./build/dev');
-}
+module.exports = env => {
+  console.log("env:::", env);
+  if (env === "production") {
+    return require("./build/build.pro");
+  } else if (env === "test") {
+    return require("./build/build.test");
+  } else {
+    return require("./build/build.dev");
+  }
+};
