@@ -11,10 +11,19 @@ module.exports = webpackMerge(BuildCommon, {
   devServer: {
     hot: true,
     // host:'',
-    port: "8888",
     // https: true,
+    port: "8888",
     open: true,
-    openPage: "html/main.html"
+    openPage: "html/main.html",
+    proxy: {
+      '/api': {
+        target: 'http://www.xiongmaozhanggui.com',
+        pathRewrite: {
+          '^/api': ''
+        },
+        changeOrigin: true
+      }
+    }
   },
   plugins: [
     new webpack.DefinePlugin({

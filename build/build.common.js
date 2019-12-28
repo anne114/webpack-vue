@@ -1,8 +1,13 @@
 const path = require("path");
 const VueLoaderPlugin = require("vue-loader/lib/plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const { CleanWebpackPlugin } = require("clean-webpack-plugin");
-const { getEntrys, getHtmlWebpackPlugin } = require("./build.utils.js");
+const {
+  CleanWebpackPlugin
+} = require("clean-webpack-plugin");
+const {
+  getEntrys,
+  getHtmlWebpackPlugin
+} = require("./build.utils.js");
 module.exports = {
   entry: getEntrys(),
   output: {
@@ -16,8 +21,7 @@ module.exports = {
     }
   },
   module: {
-    rules: [
-      {
+    rules: [{
         test: /\.vue$/,
         loader: "vue-loader"
       },
@@ -27,11 +31,11 @@ module.exports = {
         exclude: file => /node_modules/.test(file) && !/\.vue\.js/.test(file)
       },
       {
-        test: /\.(png|jpg|jif)$/i,
-        use: [
-          {
+        test: /\.(png|jpg|jif)$/,
+        use: [{
             loader: "url-loader",
             options: {
+              esModule: false,
               limit: 10240,
               name: "images/[name].[contenthash:8].[ext]"
             }
@@ -55,15 +59,13 @@ module.exports = {
       },
       {
         test: /\.(woff2?|eot|ttf|otf)(\?.*)?$/,
-        use: [
-          {
-            loader: "url-loader",
-            options: {
-              limit: 10240,
-              name: "fonts/[name].[contenthash:8].[ext]"
-            }
+        use: [{
+          loader: "url-loader",
+          options: {
+            limit: 10240,
+            name: "fonts/[name].[contenthash:8].[ext]"
           }
-        ]
+        }]
       },
       {
         test: /\.(js|vue)$/,

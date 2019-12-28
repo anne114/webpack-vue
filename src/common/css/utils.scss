@@ -1,2 +1,19 @@
-html {
+* {
+  padding: 0;
+  margin: 0;
+}
+
+ul,
+li,
+ol,
+a {
+  list-style: none
+}
+
+.d-flex {
+  display: flex;
+}
+
+.d-f-c {
+  justify-content: center;
 }
