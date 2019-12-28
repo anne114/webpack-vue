@@ -9,18 +9,22 @@
     <router-view class="router"></router-view>
   </div>
 </template>
-<script>
-import { toast } from "utilsJs";
-export default {
-  data () {
-    return {
-      msg: "welcome to panda"
-    };
-  },
-  mounted () {
+<script lang="ts">
+import Vue from 'vue';
+import { Component, Emit, Prop, Watch } from 'vue-property-decorator';
+import{State,Mutation} from 'vuex-class';
+import { toast } from "../../../common/js/utils";
+@Component
+export default class App extends Vue{
+  msg:string= "welcome to panda"
+  @Prop({default:'anne'}) name!:string
+  @State stateTest;
+  mounted(){
     toast();
+    console.log(this.stateTest);
+    
   }
-};
+}
 </script>
 <style lang="scss">
 @import url('~@/common/css/utils.scss');

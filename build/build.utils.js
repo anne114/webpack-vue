@@ -21,7 +21,7 @@ function getFileName(dirPath) {
 exports.getEntrys = () => {
   let entrys = {};
   entryFilesName.forEach(v => {
-    entrys[v] = path.resolve(entryFilePath, v + "/entry.js");
+    entrys[v] = path.resolve(entryFilePath, v + "/entry.ts");
   });
   return entrys;
 };

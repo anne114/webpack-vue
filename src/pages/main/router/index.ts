@@ -1,9 +1,8 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import routers from './router.config.js';
-import {
-  getRoutes
-} from './router.utils.js'
+import { iRouterConfig } from '../interface/router.interface';
+import routers from './router.config';
+import { getRoutes } from './router.utils'
 const routes = getRoutes(routers);
 Vue.use(VueRouter);
 export default new VueRouter({

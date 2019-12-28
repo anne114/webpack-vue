@@ -14,14 +14,28 @@ module.exports = {
     path: path.resolve(__dirname, "../dist")
   },
   resolve: {
-    extensions: [".js", ".vue", ".scss"],
+    extensions: ['.ts', ".js", ".vue", ".scss"],
     alias: {
       "@": path.resolve(__dirname, "../src"),
-      utilsJs: "@/common/js/utils.js"
+      utilsJs: "@/common/js/utils.ts"
     }
   },
   module: {
     rules: [{
+        test: /\.ts$/,
+        exclude: /node_modules/,
+        enforce: 'pre',
+        loader: 'tslint-loader'
+      },
+      {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        exclude: /node_modules/,
+        options: {
+          appendTsSuffixTo: [/\.vue$/],
+        }
+      },
+      {
         test: /\.vue$/,
         loader: "vue-loader"
       },
@@ -66,12 +80,6 @@ module.exports = {
             name: "fonts/[name].[contenthash:8].[ext]"
           }
         }]
-      },
-      {
-        test: /\.(js|vue)$/,
-        use: {
-          loader: "eslint-loader"
-        }
       }
     ]
   },
